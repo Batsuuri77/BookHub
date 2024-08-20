@@ -1,0 +1,27 @@
+import back from "../assets/icons/back.png";
+import home from "../assets/icons/home.png";
+import bookHub from "../assets/icons/bookHub.png";
+import profile from "../assets/icons/profile.png";
+import comment from "../assets/icons/comment.png";
+import dots from "../assets/icons/dots.png";
+import favourite from "../assets/icons/favourite.png";
+import myLibrary from "../assets/icons/myLibrary.png";
+import notif from "../assets/icons/notif.png";
+import search from "../assets/icons/search.png";
+import settings from "../assets/icons/settings.png";
+import share from "../assets/icons/share.png";
+
+export default {
+  back,
+  home,
+  bookHub,
+  comment,
+  dots,
+  favourite,
+  profile,
+  myLibrary,
+  notif,
+  search,
+  settings,
+  share,
+};
