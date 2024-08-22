@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "#FF6230",
+        textcolor: "#252525",
         inactive: "#C6C1C1",
         blue: "#298CFF",
         green: "#01BC40",
@@ -25,6 +26,19 @@ module.exports = {
         imedium: ["Inter_24pt-Medium", "sans-serif"],
         iregular: ["Inter_24pt-Regular", "sans-serif"],
         isemibold: ["Inter_24pt-SemiBold", "sans-serif"],
+      },
+      textInput: {
+        padding: "3px 2px",
+        borderColor: "#989898",
+        borderWidth: "1px",
+        borderRadius: "15px",
+        background: "#F7F7F9",
+        width: "100%",
+        height: "56px",
+        margin: "1px 3px",
+        color: "black",
+        marginBottom: "5px",
+        "&:focus": { borderColor: "#AFAFAF" },
       },
     },
   },

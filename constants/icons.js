@@ -10,6 +10,8 @@ import notif from "../assets/icons/notif.png";
 import search from "../assets/icons/search.png";
 import settings from "../assets/icons/settings.png";
 import share from "../assets/icons/share.png";
+import eye from "../assets/icons/eye.png";
+import eyeHide from "../assets/icons/eye-hide.png";
 
 export default {
   back,
@@ -24,4 +26,6 @@ export default {
   search,
   settings,
   share,
+  eye,
+  eyeHide,
 };
