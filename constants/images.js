@@ -15,6 +15,7 @@ import the_sign_for_home from "../assets/images/books/the-sign-for-home.png";
 import vox from "../assets/images/books/vox.png";
 import wahala from "../assets/images/books/wahala.png";
 import logo from "../assets/images/icon.png";
+import logo_hor from "../assets/images/logo-hor.png";
 
 export default {
   profile1,
@@ -34,4 +35,5 @@ export default {
   vox,
   wahala,
   logo,
+  logo_hor,
 };

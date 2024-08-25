@@ -17,7 +17,7 @@ const CustomButton = ({
       disabled={isLoading}
     >
       <View className="flex flex-row justify-center items-center flex-1">
-        <Text className={`text-white font-isemibold text-lg ${textStyles}`}>
+        <Text className={`text-white font-ibold text-lg ${textStyles}`}>
           {title}
         </Text>
 

@@ -24,40 +24,10 @@ export default function App() {
             resizeMode="contain"
           />
           <View>
-            <FormField
-              title="Username"
-              value={username}
-              placeholder="username"
-              onChangeText={setUsername}
-              handleChangeText={undefined}
-              otherStyles={undefined}
-            ></FormField>
-            <FormField
-              title="Password"
-              value={password}
-              placeholder="password"
-              onChangeText={setPassword}
-              secureTextEntry={true}
-              handleChangeText={undefined}
-              otherStyles={undefined}
-            ></FormField>
-            <Link
-              href={"../home"}
-              className="underline text-xs text-blue text-right mb-2"
-            >
-              Forgot your password
-            </Link>
             <CustomButton
-              title="Log in"
-              handlePress={() => {}}
-              containerStyles="w-full my-3 bg-primary"
-              textStyles={undefined}
-              isLoading={undefined}
-            ></CustomButton>
-            <CustomButton
-              title="Sign up"
+              title="Continue"
               handlePress={() => router.push("/sign-in")}
-              containerStyles="w-full my-3 bg-grey"
+              containerStyles="w-full my-3 bg-primary"
               textStyles={undefined}
               isLoading={undefined}
             ></CustomButton>
