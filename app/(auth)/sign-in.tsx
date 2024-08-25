@@ -7,10 +7,12 @@ import { FormField, CustomButton } from "@/components";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { getCurrentUser, signIn } from "@/lib/appwrite";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const SignIn = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { setUser, setIsLogged } = useGlobalContext();
 
   const submit = async () => {
     if (!form.email || !form.password) {
@@ -18,22 +20,20 @@ const SignIn = () => {
       return;
     }
 
-    if (form.password.length < 8 || form.password.length > 265) {
+    if (form.password.length < 8 || form.password.length > 35) {
       Alert.alert(
         "Error",
-        "Password must be between 8 and 265 characters long."
+        "Password must be between 8 and 35 characters long."
       );
-      return;
-    }
-
-    if (!form.password) {
-      Alert.alert("Error", "Passwords do not match.");
       return;
     }
 
     setIsSubmitting(true);
     try {
       await signIn(form.email, form.password);
+      const result = await getCurrentUser();
+      setUser(result);
+      setIsLogged(true);
 
       //set it to global state ...
       router.replace("/home");

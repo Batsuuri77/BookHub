@@ -7,12 +7,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../constants";
 import { CustomButton, FormField } from "../components";
 import React, { useState } from "react";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const { loading, isLogged } = useGlobalContext();
+
+  if (!loading && isLogged) return <Redirect href={"/home"} />;
 
   return (
     <SafeAreaView className="bg-white h-full">
