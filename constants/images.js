@@ -16,6 +16,8 @@ import vox from "../assets/images/books/vox.png";
 import wahala from "../assets/images/books/wahala.png";
 import logo from "../assets/images/icon.png";
 import logo_hor from "../assets/images/logo-hor.png";
+import empty from "../assets/images/empty.png";
+import settings from "../assets/images/settings.png";
 
 export default {
   profile1,
@@ -36,4 +38,6 @@ export default {
   wahala,
   logo,
   logo_hor,
+  empty,
+  settings,
 };

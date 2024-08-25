@@ -10,18 +10,18 @@ const EmptyState = ({ title, subtitle }) => {
       <Image
         source={images.empty}
         resizeMode="contain"
-        className="w-[270px] h-[216px]"
+        className="w-[150px] h-[130px]"
       />
 
-      <Text className="text-sm font-pmedium text-gray-100">{title}</Text>
-      <Text className="text-xl text-center font-psemibold text-white mt-2">
+      <Text className="text-xl font-imedium">{title}</Text>
+      <Text className="text-sm text-center font-isemibold mt-2">
         {subtitle}
       </Text>
 
       <CustomButton
-        title="Back to Explore"
+        title="Create a library"
         handlePress={() => router.push("/home")}
-        containerStyles="w-full my-5"
+        containerStyles="w-full my-5 bg-primary"
       />
     </View>
   );
