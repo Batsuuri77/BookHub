@@ -4,9 +4,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 
 import icons from "../constants/icons";
 
-const VideoCard = ({ title, creator, avatar, thumbnail, video }) => {
-  const [play, setPlay] = useState(false);
-
+const RecentBooks = ({ title, author, genre, goal, thumbnail, createdAt }) => {
   return (
     <View className="flex flex-col items-center px-4 mb-14">
       <View className="flex flex-row gap-3 items-start">
