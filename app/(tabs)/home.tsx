@@ -2,13 +2,14 @@ import { View, Text, FlatList, RefreshControl, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import { EmptyState, Trending } from "@/components";
+import { EmptyState, RecentBooks, Trending } from "@/components";
 import CustomHeader from "@/components/CustomHeader";
-import { getLatestBooks } from "@/lib/appwrite";
+import { getLatestBooks, getAllBooks } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 
 const Home = () => {
-  const { data: books, refetch } = useAppwrite(getLatestBooks);
+  const { data: books, refetch } = useAppwrite(getAllBooks);
+  const { data: latestBooks } = useAppwrite(getLatestBooks);
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = async () => {
     setRefreshing(true);
@@ -22,19 +23,17 @@ const Home = () => {
     <SafeAreaView className="h-full bg-white px-4">
       <CustomHeader image={undefined} />
       <FlatList
-        data={books}
+        data={latestBooks}
         //data={[]}
         keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => (
-          <Text className="text-3xl">{item.title}</Text>
-        )}
+        renderItem={({ item }) => <RecentBooks latestBooks={item} />}
         ListHeaderComponent={() => (
           <View className="my-2 space-y-6 border-t-2 border-grey">
             <Text className="mx-2 font-isemibold text-base">
               Suggested books
             </Text>
             <Trending posts={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]} />
-            <View className="justify-between items-start flex-row mb-6 border-b-2 border-grey">
+            <View className="justify-between items-start flex-row border-b-2 border-grey">
               <View>
                 <Text className="font-isemibold text-base mb-1 ml-2">
                   Recently added

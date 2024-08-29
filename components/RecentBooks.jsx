@@ -1,77 +1,35 @@
-import { useState } from "react";
-import { ResizeMode, Video } from "expo-av";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, Image } from "react-native";
+import { format } from "date-fns";
 
-import icons from "../constants/icons";
+const RecentBooks = ({
+  latestBooks: { title, author, goal, thumbNail, addedDate },
+}) => {
+  const formattedAddedDate = format(new Date(addedDate), "MMM dd, yyyy");
+  const formattedgoal = format(new Date(goal), "MMM dd, yyyy");
 
-const RecentBooks = ({ title, author, genre, goal, thumbnail, createdAt }) => {
   return (
-    <View className="flex flex-col items-center px-4 mb-14">
-      <View className="flex flex-row gap-3 items-start">
-        <View className="flex justify-center items-center flex-row flex-1">
-          <View className="w-[46px] h-[46px] rounded-lg border border-secondary flex justify-center items-center p-0.5">
-            <Image
-              source={{ uri: avatar }}
-              className="w-full h-full rounded-lg"
-              resizeMode="cover"
-            />
-          </View>
-
-          <View className="flex justify-center flex-1 ml-3 gap-y-1">
-            <Text
-              className="font-psemibold text-sm text-white"
-              numberOfLines={1}
-            >
-              {title}
-            </Text>
-            <Text
-              className="text-xs text-gray-100 font-pregular"
-              numberOfLines={1}
-            >
-              {creator}
-            </Text>
-          </View>
-        </View>
-
-        <View className="pt-2">
-          <Image source={icons.menu} className="w-5 h-5" resizeMode="contain" />
+    <>
+      <View className="flex flex-row justify-between py-2 mr-20 gap-5 items-start">
+        <Image
+          source={{ uri: thumbNail }}
+          className="w-[80px] h-[130px]"
+        ></Image>
+        <View className="flex flex-col justify-start items-start gap-2">
+          <Text className="font-semibold text-base leading-none">{title}</Text>
+          <Text className="text-grey text-sm font-semibold leading-none">
+            {author}
+          </Text>
+          <Text className="font-semibold text-sm leading-none">
+            Finish by {formattedgoal}
+          </Text>
+          <Text className="text-grey text-sm font-semibold leading-none">
+            Added on {formattedAddedDate}
+          </Text>
         </View>
       </View>
-
-      {play ? (
-        <Video
-          source={{ uri: video }}
-          className="w-full h-60 rounded-xl mt-3"
-          resizeMode={ResizeMode.CONTAIN}
-          useNativeControls
-          shouldPlay
-          onPlaybackStatusUpdate={(status) => {
-            if (status.didJustFinish) {
-              setPlay(false);
-            }
-          }}
-        />
-      ) : (
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => setPlay(true)}
-          className="w-full h-60 rounded-xl mt-3 relative flex justify-center items-center"
-        >
-          <Image
-            source={{ uri: thumbnail }}
-            className="w-full h-full rounded-xl mt-3"
-            resizeMode="cover"
-          />
-
-          <Image
-            source={icons.play}
-            className="w-12 h-12 absolute"
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
-      )}
-    </View>
+      <View className="justify-between items-start flex-row border-b-2 border-grey"></View>
+    </>
   );
 };
 
-export default VideoCard;
+export default RecentBooks;
