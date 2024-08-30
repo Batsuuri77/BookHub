@@ -12,6 +12,7 @@ import settings from "../assets/icons/settings.png";
 import share from "../assets/icons/share.png";
 import eye from "../assets/icons/eye.png";
 import eyeHide from "../assets/icons/eye-hide.png";
+import right from "../assets/icons/go-right.png";
 
 export default {
   back,
@@ -28,4 +29,5 @@ export default {
   share,
   eye,
   eyeHide,
+  right,
 };

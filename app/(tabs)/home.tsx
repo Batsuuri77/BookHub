@@ -29,10 +29,9 @@ const Home = () => {
         renderItem={({ item }) => <RecentBooks latestBooks={item} />}
         ListHeaderComponent={() => (
           <View className="my-2 space-y-6 border-t-2 border-grey">
-            <Text className="mx-2 font-isemibold text-base">
-              Suggested books
-            </Text>
-            <Trending posts={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]} />
+            <Text className="m-2 font-semibold text-base">Suggested books</Text>
+
+            <Trending data={books ?? []} />
             <View className="justify-between items-start flex-row border-b-2 border-grey">
               <View>
                 <Text className="font-isemibold text-base mb-1 ml-2">
