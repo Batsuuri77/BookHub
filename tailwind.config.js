@@ -10,7 +10,7 @@ module.exports = {
         blue: "#298CFF",
         green: "#01BC40",
         red: "#FF5656",
-        grey: "#989898 ",
+        grey: "#989898",
       },
       fontFamily: {
         flight: ["FiraCode-Light", "sans-serif"],

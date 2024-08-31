@@ -20,41 +20,45 @@ const Home = () => {
   //console.log(books);
 
   return (
-    <SafeAreaView className="h-full bg-white px-4">
-      <CustomHeader image={undefined} />
-      <FlatList
-        data={latestBooks}
-        //data={[]}
-        keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => <RecentBooks latestBooks={item} />}
-        ListHeaderComponent={() => (
-          <View className="my-2 space-y-6 border-t-2 border-grey">
-            <Text className="m-2 font-semibold text-base">Suggested books</Text>
+    <>
+      <SafeAreaView className="h-full bg-white px-4">
+        <CustomHeader />
+        <FlatList
+          data={latestBooks}
+          //data={[]}
+          keyExtractor={(item) => item.$id}
+          renderItem={({ item }) => <RecentBooks latestBooks={item} />}
+          ListHeaderComponent={() => (
+            <View className="my-2 space-y-6">
+              <Text className="m-2 font-semibold text-base">
+                Suggested books
+              </Text>
 
-            <Trending data={books ?? []} />
-            <View className="justify-between items-start flex-row border-b-2 border-grey">
-              <View>
-                <Text className="font-isemibold text-base mb-1 ml-2">
-                  Recently added
-                </Text>
+              <Trending data={books ?? []} />
+              <View className="justify-between items-start flex-row border-b-2 border-grey">
+                <View>
+                  <Text className="font-isemibold text-base mb-1 ml-2">
+                    Recently added
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
-        )}
-        ListEmptyComponent={() => (
-          <EmptyState
-            title={"No library found"}
-            subtitle={
-              "You don’t have any libraries created. Click the button below to create your first one."
-            }
-          />
-        )}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      />
-      <StatusBar backgroundColor="black" style="auto" />
-    </SafeAreaView>
+          )}
+          ListEmptyComponent={() => (
+            <EmptyState
+              title={"No library found"}
+              subtitle={
+                "You don’t have any libraries created. Click the button below to create your first one."
+              }
+            />
+          )}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        />
+      </SafeAreaView>
+      <StatusBar backgroundColor="white" style="dark" />
+    </>
   );
 };
 
