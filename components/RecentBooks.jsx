@@ -27,7 +27,7 @@ const RecentBooks = ({
           </Text>
         </View>
       </View>
-      <View className="justify-between items-start flex-row border-b-2 border-grey"></View>
+      <View className="justify-between items-start flex-row border-b border-grey"></View>
     </>
   );
 };

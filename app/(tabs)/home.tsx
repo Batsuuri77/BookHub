@@ -6,11 +6,13 @@ import { EmptyState, RecentBooks, Trending } from "@/components";
 import CustomHeader from "@/components/CustomHeader";
 import { getLatestBooks, getAllBooks } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
+import { Book } from "@/types/types";
 
 const Home = () => {
   const { data: books, refetch } = useAppwrite(getAllBooks);
   const { data: latestBooks } = useAppwrite(getLatestBooks);
   const [refreshing, setRefreshing] = useState(false);
+
   const onRefresh = async () => {
     setRefreshing(true);
     await refetch();
@@ -23,7 +25,7 @@ const Home = () => {
     <>
       <SafeAreaView className="h-full bg-white px-4">
         <CustomHeader />
-        <FlatList
+        <FlatList<Book>
           data={latestBooks}
           //data={[]}
           keyExtractor={(item) => item.$id}

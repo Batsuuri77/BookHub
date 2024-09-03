@@ -29,7 +29,7 @@ export default function App() {
             <CustomButton
               title="Continue"
               handlePress={() => router.push("/sign-in")}
-              containerStyles="w-full my-3 bg-primary"
+              containerStyles="w-full h-[56px] my-3 bg-primary"
               textStyles={undefined}
               isLoading={undefined}
             ></CustomButton>

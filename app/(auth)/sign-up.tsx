@@ -56,11 +56,15 @@ const SignUp = () => {
       setUser(result);
       setIsLogged(true);
 
-      //set it to global state ...
       router.replace("/home");
     } catch (error) {
-      Alert.alert("Error", error.message || "An unexpected error occurred.");
-      console.log(error);
+      if (error instanceof Error) {
+        Alert.alert("Error", error.message || "An unexpected error occurred.");
+        console.log(error);
+      } else {
+        Alert.alert("Error", "An unexpected error occurred.");
+        console.log(error);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -161,7 +165,7 @@ const SignUp = () => {
             <CustomButton
               title="Sign up"
               handlePress={submit}
-              containerStyles="w-full my-3 bg-primary"
+              containerStyles="w-full h-[56px] my-3 bg-primary"
               textStyles={undefined}
               isLoading={isSubmitting}
             ></CustomButton>

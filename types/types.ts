@@ -1,4 +1,6 @@
 export interface Book {
+  state: string;
+  favourite: any;
   $id: string;
   title: string;
   author: string;

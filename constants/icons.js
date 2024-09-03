@@ -13,6 +13,8 @@ import share from "../assets/icons/share.png";
 import eye from "../assets/icons/eye.png";
 import eyeHide from "../assets/icons/eye-hide.png";
 import right from "../assets/icons/go-right.png";
+import heart from "../assets/icons/clickedHeart.png";
+import plus from "../assets/icons/plus.png";
 
 export default {
   back,
@@ -30,4 +32,6 @@ export default {
   eye,
   eyeHide,
   right,
+  heart,
+  plus,
 };
