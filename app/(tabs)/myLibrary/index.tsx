@@ -179,7 +179,10 @@ const MyLibrary = () => {
         <View className="absolute bottom-2 right-1/3 transform -translate-x-1/3 bg-transparent">
           <CustomButton
             title={"Add new book +"}
-            handlePress={() => router.push("/addnewbook")}
+            handlePress={() => {
+              //console.log("Navigating to addnewbook page");
+              router.push("/myLibrary/addnewbook");
+            }}
             containerStyles="w-40 h-10 rounded-full px-4 py-2 bg-primary"
             textStyles="text-base"
             isLoading={undefined}

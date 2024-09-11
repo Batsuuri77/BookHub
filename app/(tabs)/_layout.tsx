@@ -1,11 +1,18 @@
 import { StatusBar } from "expo-status-bar";
 import { Tabs, Redirect } from "expo-router";
 import icons from "../../constants/icons";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, ImageSourcePropType } from "react-native";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { Loader } from "../../components";
 
-const TabIcon = ({ icon, color, name, focused }) => {
+interface TabIconProps {
+  icon: ImageSourcePropType;
+  color: string;
+  name: string;
+  focused: boolean;
+}
+
+const TabIcon = ({ icon, color, name, focused }: TabIconProps) => {
   return (
     <>
       <View className="items-center justify-center gap-2">
@@ -28,8 +35,6 @@ const TabIcon = ({ icon, color, name, focused }) => {
 
 const TabsLayout = () => {
   // const globalContext = useGlobalContext();
-  // console.log(globalContext); // This should log the context value
-
   // if (!globalContext) {
   //   return <Text>Error: Global context is undefined</Text>;
   // }
@@ -37,10 +42,7 @@ const TabsLayout = () => {
   // const { loading, isLogged } = globalContext;
 
   // if (!loading && !isLogged) return <Redirect href="/sign-in" />;
-  // Rest of your component
 
-  //const { loading, isLogged } = useGlobalContext();
-  //if (!loading && !isLogged) return <Redirect href="/sign-in" />;
   return (
     <>
       <Tabs

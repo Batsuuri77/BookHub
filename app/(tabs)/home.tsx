@@ -58,8 +58,8 @@ const Home = () => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         />
+        <StatusBar backgroundColor="black" style="dark" />
       </SafeAreaView>
-      <StatusBar backgroundColor="white" style="dark" />
     </>
   );
 };

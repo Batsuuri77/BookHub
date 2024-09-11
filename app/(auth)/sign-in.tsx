@@ -30,6 +30,12 @@ const SignIn = () => {
 
     setIsSubmitting(true);
     try {
+      const user = await getCurrentUser();
+      if (user) {
+        Alert.alert("Error", "You are already logged in.");
+        return;
+      }
+
       await signIn(form.email, form.password);
       const result = await getCurrentUser();
       setUser(result);

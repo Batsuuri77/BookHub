@@ -15,6 +15,7 @@ import eyeHide from "../assets/icons/eye-hide.png";
 import right from "../assets/icons/go-right.png";
 import heart from "../assets/icons/clickedHeart.png";
 import plus from "../assets/icons/plus.png";
+import x from "../assets/icons/x.png";
 
 export default {
   back,
@@ -34,4 +35,5 @@ export default {
   right,
   heart,
   plus,
+  x,
 };
