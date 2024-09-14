@@ -83,9 +83,9 @@ const SignUp = () => {
           />
           <View>
             <FormField
-              title="User name"
+              title="First name"
               value={form.username}
-              placeholder="User name"
+              placeholder="First name"
               handleChangeText={(e: any) => setForm({ ...form, username: e })}
               otherStyles={undefined}
             ></FormField>

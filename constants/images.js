@@ -18,6 +18,7 @@ import logo from "../assets/images/icon.png";
 import logo_hor from "../assets/images/logo-hor.png";
 import empty from "../assets/images/empty.png";
 import settings from "../assets/images/settings.png";
+import back from "../assets/images/back.png";
 
 export default {
   profile1,
@@ -40,4 +41,5 @@ export default {
   logo_hor,
   empty,
   settings,
+  back
 };

@@ -12,7 +12,7 @@ const CustomHeader = () => {
             className="w-full h-full object-cover"
           />
           <Link
-            href={"/(tabs)/profile"}
+            href={"/account"}
             className="w-full h-full absolute"
           ></Link>
         </View>

@@ -21,3 +21,24 @@ export interface User {
   avatar: string;
   createdDate: Date;
 }
+
+
+export interface Post {
+  $id: string;
+  like: BigInteger;
+  shareCount: BigInteger;
+  commentCount: BigInteger;
+  content: string;
+  createdDate: Date;
+  userId: string;
+  bookImage: string;
+  userName: string;
+  userImage: string;
+}
+
+export interface Comment {
+  $id: string;
+  postId: string;
+  postComment: string;
+  userName: string;
+}
