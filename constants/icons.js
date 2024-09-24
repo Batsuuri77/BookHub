@@ -16,6 +16,8 @@ import right from "../assets/icons/go-right.png";
 import heart from "../assets/icons/clickedHeart.png";
 import plus from "../assets/icons/plus.png";
 import x from "../assets/icons/x.png";
+import detail from "../assets/icons/detail.png";
+import add from "../assets/icons/add.png";
 
 export default {
   back,
@@ -36,4 +38,6 @@ export default {
   heart,
   plus,
   x,
+  detail,
+  add,
 };

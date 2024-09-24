@@ -21,3 +21,11 @@ export interface User {
   avatar: string;
   createdDate: Date;
 }
+
+export interface Note {
+  $id: string;
+  context: string;
+  chapter: string;
+  page: string;
+  createdAt: string;
+}

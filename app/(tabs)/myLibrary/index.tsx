@@ -17,7 +17,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { Book } from "@/types/types";
 import { CustomButton, EmptyState } from "@/components";
 import icons from "@/constants/icons";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 
 type DropDownItem = {
   label: string;
@@ -101,7 +101,7 @@ const MyLibrary = () => {
           index % 2 === 0 ? "border-r border-grey" : ""
         }`}
       >
-        <Image source={{ uri: item.thumbNail }} className="w-34 h-60 mt-1" />
+        <Image source={{ uri: item.thumbNail }} className="w-40 h-60 mt-1" />
         <View className="flex flex-row justify-between mb-2">
           <TouchableOpacity
             className="flex justify-center items-center w-6 h-6 object-contain"
@@ -120,8 +120,21 @@ const MyLibrary = () => {
             </Text>
           </View>
           <View className="flex justify-center items-center w-6 h-6 object-contain">
-            <Image source={icons.dots} className="w-full h-full"></Image>
-            <Link href={"/home"} className="w-full h-full absolute"></Link>
+            <TouchableOpacity
+              className="w-full h-full absolute"
+              onPress={() => {
+                //console.log(item.$id);
+                // router.push(`/myLibrary/bookDetail?bookId=${item.$id}`);
+
+                router.push({
+                  pathname: `/myLibrary/bookDetail`,
+                  params: { bookId: item.$id },
+                });
+                //console.log("pressed");
+              }}
+            >
+              <Image source={icons.dots} className="w-full h-full"></Image>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
