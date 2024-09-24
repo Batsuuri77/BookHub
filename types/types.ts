@@ -29,3 +29,23 @@ export interface Note {
   page: string;
   createdAt: string;
 }
+
+export interface Post {
+  $id: string;
+  like: BigInteger;
+  shareCount: BigInteger;
+  commentCount: BigInteger;
+  content: string;
+  createdDate: Date;
+  userId: string;
+  bookImage: string;
+  userName: string;
+  userImage: string;
+}
+
+export interface Comment {
+  $id: string;
+  postId: string;
+  postComment: string;
+  userName: string;
+}

@@ -11,10 +11,7 @@ const CustomHeader = () => {
             source={images.profile1}
             className="w-full h-full object-cover"
           />
-          <Link
-            href={"/(tabs)/profile"}
-            className="w-full h-full absolute"
-          ></Link>
+          <Link href={"/account"} className="w-full h-full absolute"></Link>
         </View>
         <View className="w-[180px] h-[40px]">
           <Image

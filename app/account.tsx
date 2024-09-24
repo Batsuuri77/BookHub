@@ -11,13 +11,11 @@ import {
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
-import { Link, router } from "expo-router";
-import { images } from "@/constants";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import { updateUser, uploadFile } from "@/lib/appwrite";
 import * as ImagePicker from "expo-image-picker";
 
-const Profile = () => {
+const Account = () => {
   const context = useGlobalContext();
   const { user, setUser } = useGlobalContext();
 
@@ -264,7 +262,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;
+export default Account;
 
 function launchImageLibrary(
   options: { mediaType: string; includeBase64: boolean },

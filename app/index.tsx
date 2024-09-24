@@ -1,12 +1,12 @@
 import "react-native-reanimated";
-import { Text, View, ScrollView, Image, TextInput } from "react-native";
+import { View, ScrollView, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { Link, Redirect, router } from "expo-router";
+import { Redirect, router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../constants";
-import { CustomButton, FormField } from "../components";
-import React, { useState } from "react";
+import { CustomButton } from "../components";
+import React from "react";
 import { useGlobalContext } from "@/context/GlobalProvider";
 
 SplashScreen.preventAutoHideAsync();
@@ -40,5 +40,3 @@ export default function App() {
     </SafeAreaView>
   );
 }
-
-// https://www.youtube.com/watch?v=ZBCUegTZF7M
