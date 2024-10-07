@@ -56,7 +56,7 @@ const settings = () => {
       <View style={styles.separator} />
 
       <TouchableOpacity
-        onPress={() => navigateToPage("/notifications")}
+        onPress={() => navigateToPage("/sign-in")}
         style={styles.textButton}
       >
         <Text style={styles.textButtonText}>Privacy and Security</Text>

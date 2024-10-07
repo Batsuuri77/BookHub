@@ -16,7 +16,6 @@ import { updateUser, uploadFile } from "@/lib/appwrite";
 import * as ImagePicker from "expo-image-picker";
 
 const Account = () => {
-  const context = useGlobalContext();
   const { user, setUser } = useGlobalContext();
 
   const [profilePicture, setProfilePicture] = useState(user?.avatar);

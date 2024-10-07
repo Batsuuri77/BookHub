@@ -11,13 +11,18 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import CustomHeader from "@/components/CustomHeader";
-import { getAllBooks, updateFavouriteStatus } from "@/lib/appwrite";
+import {
+  getAllBooks,
+  getAllBooksByUserId,
+  updateFavouriteStatus,
+} from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import DropDownPicker from "react-native-dropdown-picker";
 import { Book } from "@/types/types";
 import { CustomButton, EmptyState } from "@/components";
 import icons from "@/constants/icons";
 import { router } from "expo-router";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 type DropDownItem = {
   label: string;
@@ -25,7 +30,8 @@ type DropDownItem = {
 };
 
 const MyLibrary = () => {
-  const { data, refetch } = useAppwrite(getAllBooks);
+  const { user } = useGlobalContext();
+  const { data, refetch } = useAppwrite(() => getAllBooksByUserId(user?.$id));
   const books = data as Book[];
   const [refreshing, setRefreshing] = useState(false);
   const [filteredBooks, setFilteredBooks] = useState<Book[]>(books);

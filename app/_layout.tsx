@@ -29,7 +29,11 @@ const RootLayout = () => {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
           name="account"
-          options={{ title: "Account Settings", headerShown: true }}
+          options={{ title: "Account Settings", headerShown: false }}
+        />
+        <Stack.Screen
+          name="addnewnote"
+          options={{ title: "Add new note", headerShown: false }}
         />
         {/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }} /> */}
       </Stack>

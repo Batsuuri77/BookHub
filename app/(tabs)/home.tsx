@@ -4,18 +4,36 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { EmptyState, RecentBooks, Trending } from "@/components";
 import CustomHeader from "@/components/CustomHeader";
-import { getLatestBooks, getAllBooks } from "@/lib/appwrite";
+import { getLatestBooks, getAllBooks, getCurrentUser } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import { Book } from "@/types/types";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const Home = () => {
+  const { user } = useGlobalContext();
   const { data: books, refetch } = useAppwrite(getAllBooks);
-  const { data: latestBooks } = useAppwrite(getLatestBooks);
+  const { data: latestBooks, refetch: refetchLatestBooks } = useAppwrite(() =>
+    getLatestBooks(user?.$id)
+  );
   const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const user = await getCurrentUser();
+        //console.log("Current logged-in user:", user);
+      } catch (error) {
+        console.error("Error fetching current user:", error);
+      }
+    };
+
+    fetchCurrentUser();
+  }, []);
 
   const onRefresh = async () => {
     setRefreshing(true);
     await refetch();
+    await refetchLatestBooks();
     setRefreshing(false);
   };
 

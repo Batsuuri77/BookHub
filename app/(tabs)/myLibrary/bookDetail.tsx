@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomHeader from "@/components/CustomHeader";
 import { icons } from "@/constants";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import {
   getAllNotes,
   getBookById,
@@ -20,11 +20,15 @@ import {
 import { format } from "date-fns";
 import Notes from "@/components/Notes";
 import { Note } from "@/types/types";
+import { useGlobalContext } from "@/context/GlobalProvider";
+import { StatusBar } from "expo-status-bar";
 
 const BookDetail = () => {
   const navigation = useNavigation();
   const { bookId } = useLocalSearchParams();
   //console.log(bookId);
+  const { user } = useGlobalContext();
+  //console.log(user);
 
   const [book, setBook] = useState<any>(null);
   const [durationMessage, setDurationMessage] = useState<string>("");
@@ -102,7 +106,7 @@ const BookDetail = () => {
         durationMessage += isEarly ? "early" : "late";
         setDurationMessage(durationMessage);
 
-        //console.log(durationMessage);
+        console.log(durationMessage);
       } else {
         console.error("Invalid dates provided.");
       }
@@ -115,10 +119,19 @@ const BookDetail = () => {
       if (!bookId) return;
 
       try {
-        const fetchedNotes = await getAllNotes(bookId);
+        const fetchedNotes = await getAllNotes(bookId, user.$id);
+
         if (fetchedNotes) {
-          setNotes(fetchedNotes);
-          console.log(fetchedNotes);
+          const mappedNotes: Note[] = fetchedNotes.map((doc) => ({
+            $id: doc.$id,
+            context: doc.context || "",
+            chapter: doc.chapter || "",
+            page: doc.page || "",
+            createdAt: doc.createdAt || new Date().toISOString(),
+          }));
+
+          setNotes(mappedNotes);
+          console.log("Mapped notes:", mappedNotes);
         } else {
           console.log("No notes found for this book.");
         }
@@ -177,6 +190,8 @@ const BookDetail = () => {
     }
   };
 
+  const createNote = async () => {};
+
   //Set background color based on the state of the book
   const backgroundColor =
     book.state === "New" ? "bg-green" : book.state === "Lent" ? "bg-blue" : "";
@@ -193,155 +208,172 @@ const BookDetail = () => {
     <>
       <SafeAreaView className="flex-1 h-full bg-white px-4">
         <CustomHeader />
-        {/* <ScrollView className="flex-1"> */}
-        {/* Go back button and book title and author as a subject */}
-        <View className="mt-2 w-full h-12 flex-row items-center justify-between">
-          <View className="w-12 h-12 p-2 flex items-center justify-center">
-            <Image source={icons.back} className="w-10 h-10"></Image>
-            <TouchableOpacity
-              onPress={handleGoBack}
-              className="w-full h-full absolute"
-            ></TouchableOpacity>
-          </View>
-          <View className=" flex-col items-center justify-center mr-24 max-w-full">
-            <Text className="font-semibold text-xl text-center truncate max-w-xs">
-              {book?.title}
-            </Text>
-            <Text className="font-semibold text-sm text-grey truncate max-w-xs text-center">
-              {book?.author}
-            </Text>
-          </View>
-        </View>
-
-        {/* Thumbnail pic and genre, goal, achievement with addedDate */}
-        <View className="flex-row items-start mt-2 max-w-full border-b border-grey pb-2">
-          <View className="mr-2">
-            <Image source={{ uri: book?.thumbNail }} className="w-40 h-60" />
-            <View className="flex flex-row justify-between px-2">
+        <ScrollView className="flex-1">
+          {/* Go back button and book title and author as a subject */}
+          <View className="mt-2 w-full h-12 flex-row items-center justify-between">
+            <View className="w-12 h-12 p-2 flex items-center justify-center">
+              <Image source={icons.back} className="w-10 h-10"></Image>
               <TouchableOpacity
-                className="flex justify-center items-center w-6 h-6 object-contain"
-                onPress={toggleFavourite}
+                onPress={handleGoBack}
+                className="w-full h-full absolute"
+              ></TouchableOpacity>
+            </View>
+            <View className=" flex-col items-center justify-center mr-24 max-w-full">
+              <Text className="font-semibold text-xl text-center truncate max-w-xs">
+                {book?.title}
+              </Text>
+              <Text className="font-semibold text-sm text-grey truncate max-w-xs text-center">
+                {book?.author}
+              </Text>
+            </View>
+          </View>
+
+          {/* Thumbnail pic and genre, goal, achievement with addedDate */}
+          <View className="flex-row items-start mt-2 max-w-full border-b border-grey pb-2">
+            <View className="mr-2">
+              <Image source={{ uri: book?.thumbNail }} className="w-40 h-60" />
+              <View className="flex flex-row justify-between px-2">
+                <TouchableOpacity
+                  className="flex justify-center items-center w-6 h-6 object-contain"
+                  onPress={toggleFavourite}
+                >
+                  <Image
+                    source={book.favourite ? icons.heart : icons.favourite}
+                    className="w-full h-full"
+                  />
+                </TouchableOpacity>
+                <View
+                  className={`${backgroundColor} h-6 w-14 rounded-xl flex items-center justify-center`}
+                >
+                  <Text className="text-center font-semibold text-white">
+                    {book?.state || ""}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View className="flex-1 flex-col max-w-full items-start py-2 pr-1 ">
+              <View className="flex-row py-2 justify-between items-center max-w-full flex border-b border-grey">
+                <View className="flex-1 w-full ">
+                  <View className="flex flex-col w-full items-start ">
+                    <Text className="font-semibold text-sm text-black">
+                      Genre
+                    </Text>
+                    <View className="flex flex-row w-full items-center justify-between">
+                      <Text className="font-semibold text-sm text-blue">
+                        {book?.genre}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <Image source={icons.detail} className="w-6 h-6"></Image>
+              </View>
+              <View className="flex-row py-2 justify-between items-center max-w-full flex border-b border-grey">
+                <View className="flex-1 w-full ">
+                  <View className="flex flex-col w-full items-start ">
+                    <Text className="font-semibold text-sm text-black">
+                      Goal
+                    </Text>
+                    <View className="flex flex-row w-full items-center justify-between">
+                      <Text className="text-sm text-black">
+                        {formattedgoal}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <Image source={icons.detail} className="w-6 h-6"></Image>
+              </View>
+              <View className="flex-row py-2 justify-between items-center max-w-full flex border-b border-grey">
+                <View className="flex-1 w-full ">
+                  <View className="flex flex-col w-full items-start ">
+                    <Text className="font-semibold text-sm text-black">
+                      Achievement
+                    </Text>
+                    <View className="flex flex-col w-full items-start justify-between">
+                      <Text className="text-sm text-black">
+                        {formattedAchievement}
+                      </Text>
+                      <Text className="text-xs text-green">
+                        {durationMessage}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <Image source={icons.detail} className="w-6 h-6"></Image>
+              </View>
+              <View className="flex-row py-2 justify-between items-center max-w-full flex">
+                <View className="flex-1 w-full ">
+                  <View className="flex flex-col w-full items-start ">
+                    <Text className="font-semibold text-sm text-black">
+                      Added to the library on
+                    </Text>
+                    <View className="flex flex-col w-full items-start justify-between">
+                      <Text className="text-sm text-black">
+                        {formattedAddedDate}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          {/* Sharing status section to share the book to another person */}
+          <View className="border-b border-grey p-2">
+            <Text className="text-lg font-semibold mb-1">Sharing status</Text>
+            <View className="flex flex-row justify-between items-center gap-x-4">
+              <TouchableOpacity
+                onPress={undefined}
+                className="bg-[#D9D9D9] rounded-md p-2 flex-1"
               >
-                <Image
-                  source={book.favourite ? icons.heart : icons.favourite}
-                  className="w-full h-full"
-                />
+                <Text className="text-center font-semibold text-xs">Lend</Text>
               </TouchableOpacity>
-              <View
-                className={`${backgroundColor} h-6 w-14 rounded-xl flex items-center justify-center`}
+              <TouchableOpacity
+                onPress={undefined}
+                className="bg-[#D9D9D9] rounded-md p-2 flex-1"
               >
-                <Text className="text-center font-semibold text-white">
-                  {book?.state || ""}
+                <Text className="text-center font-semibold text-xs">
+                  Borrow
                 </Text>
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
-          <View className="flex-1 flex-col max-w-full items-start py-2 pr-1 ">
-            <View className="flex-row py-2 justify-between items-center max-w-full flex border-b border-grey">
-              <View className="flex-1 w-full ">
-                <View className="flex flex-col w-full items-start ">
-                  <Text className="font-semibold text-sm text-black">
-                    Genre
-                  </Text>
-                  <View className="flex flex-row w-full items-center justify-between">
-                    <Text className="font-semibold text-sm text-blue">
-                      {book?.genre}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <Image source={icons.detail} className="w-6 h-6"></Image>
-            </View>
-            <View className="flex-row py-2 justify-between items-center max-w-full flex border-b border-grey">
-              <View className="flex-1 w-full ">
-                <View className="flex flex-col w-full items-start ">
-                  <Text className="font-semibold text-sm text-black">Goal</Text>
-                  <View className="flex flex-row w-full items-center justify-between">
-                    <Text className="text-sm text-black">{formattedgoal}</Text>
-                  </View>
-                </View>
-              </View>
-              <Image source={icons.detail} className="w-6 h-6"></Image>
-            </View>
-            <View className="flex-row py-2 justify-between items-center max-w-full flex border-b border-grey">
-              <View className="flex-1 w-full ">
-                <View className="flex flex-col w-full items-start ">
-                  <Text className="font-semibold text-sm text-black">
-                    Achievement
-                  </Text>
-                  <View className="flex flex-col w-full items-start justify-between">
-                    <Text className="text-sm text-black">
-                      {formattedAchievement}
-                    </Text>
-                    <Text className="text-xs text-green">
-                      {durationMessage}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <Image source={icons.detail} className="w-6 h-6"></Image>
-            </View>
-            <View className="flex-row py-2 justify-between items-center max-w-full flex">
-              <View className="flex-1 w-full ">
-                <View className="flex flex-col w-full items-start ">
-                  <Text className="font-semibold text-sm text-black">
-                    Added to the library on
-                  </Text>
-                  <View className="flex flex-col w-full items-start justify-between">
-                    <Text className="text-sm text-black">
-                      {formattedAddedDate}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
 
-        {/* Sharing status section to share the book to another person */}
-        <View className="border-b border-grey p-2">
-          <Text className="text-lg font-semibold mb-1">Sharing status</Text>
-          <View className="flex flex-row justify-between items-center gap-x-4">
+          {/* Noting section to add notes to the book*/}
+          <View className="border-b border-grey p-2 flex flex-row justify-between">
+            <Text className="text-base font-semibold mb-1">Notes</Text>
             <TouchableOpacity
-              onPress={undefined}
-              className="bg-[#D9D9D9] rounded-md p-2 flex-1"
-            >
-              <Text className="text-center font-semibold text-xs">Lend</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={undefined}
-              className="bg-[#D9D9D9] rounded-md p-2 flex-1"
-            >
-              <Text className="text-center font-semibold text-xs">Borrow</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+              onPress={() => {
+                //console.log(item.$id);
+                // router.push(`/myLibrary/bookDetail?bookId=${item.$id}`);
 
-        {/* Noting section to add notes to the book*/}
-        <View className="border-b border-grey p-2 flex flex-row justify-between">
-          <Text className="text-base font-semibold mb-1">Notes</Text>
-          <TouchableOpacity
-            onPress={undefined}
-            className="flex justify-center items-center"
-          >
-            <Image source={icons.add} className="w-6 h-6"></Image>
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          data={notes}
-          keyExtractor={(item) => item?.$id}
-          renderItem={({ item }) => (
-            <Notes
-              allNotes={{
-                context: item?.context,
-                chapter: item?.chapter,
-                page: item?.page,
-                createdAt: item?.createdAt,
+                router.push({
+                  pathname: `/addnewnote`,
+                  params: { bookId },
+                });
               }}
+            >
+              <Image source={icons.add} className="w-6 h-6"></Image>
+            </TouchableOpacity>
+          </View>
+          <View style={{ height: 400 }}>
+            <FlatList
+              data={notes}
+              keyExtractor={(item) => item?.$id}
+              renderItem={({ item }) => (
+                <Notes
+                  allNotes={{
+                    context: item?.context,
+                    chapter: item?.chapter,
+                    page: item?.page,
+                    createdAt: item?.createdAt,
+                  }}
+                />
+              )}
+              //style={{ flex: 1 }}
             />
-          )}
-        />
-        {/* </ScrollView> */}
+          </View>
+        </ScrollView>
+        <StatusBar backgroundColor="black" style="dark" />
       </SafeAreaView>
     </>
   );

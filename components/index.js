@@ -10,6 +10,7 @@ import EmptyStatePost from "./EmptyStatePost";
 import BookHubPost from "./BookHubPost";
 import Notes from "./Notes";
 import CustomHeader from "./CustomHeader";
+import ContextInput from "./ContextInput";
 
 async function initializeApp() {
   try {
@@ -48,4 +49,5 @@ export {
   EmptyStatePost,
   Notes,
   CustomHeader,
+  ContextInput,
 };

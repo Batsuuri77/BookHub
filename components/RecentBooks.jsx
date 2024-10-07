@@ -1,8 +1,10 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { format } from "date-fns";
+import { router } from "expo-router";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const RecentBooks = ({
-  latestBooks: { title, author, goal, thumbNail, addedDate },
+  latestBooks: { title, author, goal, thumbNail, addedDate, $id },
 }) => {
   const formattedAddedDate = format(new Date(addedDate), "MMM dd, yyyy");
   const formattedgoal = format(new Date(goal), "MMM dd, yyyy");
@@ -10,10 +12,23 @@ const RecentBooks = ({
   return (
     <>
       <View className="flex flex-row justify-between py-2 mr-20 gap-5 items-start">
-        <Image
-          source={{ uri: thumbNail }}
-          className="w-[80px] h-[130px]"
-        ></Image>
+        <TouchableOpacity
+          onPress={() => {
+            //console.log(item.$id);
+            // router.push(`/myLibrary/bookDetail?bookId=${item.$id}`);
+
+            router.push({
+              pathname: `/myLibrary/bookDetail`,
+              params: { bookId: $id },
+            });
+            //console.log("pressed");
+          }}
+        >
+          <Image
+            source={{ uri: thumbNail }}
+            className="w-[80px] h-[130px]"
+          ></Image>
+        </TouchableOpacity>
         <View className="flex flex-col justify-start items-start gap-2">
           <Text className="font-semibold text-base leading-none">{title}</Text>
           <Text className="text-grey text-sm font-semibold leading-none">

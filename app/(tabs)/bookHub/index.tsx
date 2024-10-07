@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { CustomButton } from "@/components";
 import CustomHeader from "@/components/CustomHeader";
-import { getAllPosts } from "@/lib/appwrite";
+import { getAllPosts, getCurrentUser } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import { Post } from "@/types/types";
 import { router } from "expo-router";

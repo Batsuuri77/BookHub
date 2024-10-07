@@ -4,6 +4,7 @@ import icons from "../../constants/icons";
 import { View, Image, Text, ImageSourcePropType } from "react-native";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { Loader } from "../../components";
+import React from "react";
 
 interface TabIconProps {
   icon: ImageSourcePropType;

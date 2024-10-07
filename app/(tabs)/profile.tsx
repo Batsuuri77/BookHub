@@ -18,8 +18,7 @@ import { updateUser, uploadFile } from "@/lib/appwrite";
 import * as ImagePicker from "expo-image-picker";
 
 const Profile = () => {
-  const context = useGlobalContext();
-  const { user, setUser } = useGlobalContext();
+  const { user, setUser } = useGlobalContext(); // Global context
 
   const [profilePicture, setProfilePicture] = useState(user?.avatar);
   const [name, setName] = useState(user?.firstName);
@@ -30,10 +29,8 @@ const Profile = () => {
 
   const handleSave = async () => {
     try {
-      if (!user) {
-        console.error("No user context available.");
-        return;
-      }
+      if (!user) return;
+
       const updatedUser = await updateUser(
         user.$id,
         email,
@@ -51,10 +48,9 @@ const Profile = () => {
     }
   };
 
+  // Same handleChangeProfilePicture function as in Account component
   const handleChangeProfilePicture = async () => {
-    console.log("called upload");
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
     if (status !== "granted") {
       Alert.alert(
         "Permission Denied",
@@ -74,32 +70,14 @@ const Profile = () => {
       const uri = result.assets[0].uri;
 
       try {
-        // Convert URI to a file object
-        const file = {
-          uri: uri,
-          type: "image/jpeg",
-          name: uri.split("/").pop(),
-          size: 5,
-        };
-
-        console.log(file);
-        // Call the uploadFile function
+        const file = { uri, type: "image/jpeg", name: uri.split("/").pop() };
         const fileUrl = await uploadFile(file, "image");
 
         if (fileUrl) {
-          setProfilePicture(fileUrl);
-        } else {
-          Alert.alert(
-            "Upload failed",
-            "The image could not be uploaded. Please try again."
-          );
+          setProfilePicture(fileUrl); // Update the state
         }
       } catch (error) {
-        Alert.alert(
-          "Upload failed",
-          "Unable to upload image. Please try again."
-        );
-        console.error("Upload error:", error);
+        console.error("Error uploading image:", error);
       }
     }
   };
@@ -174,6 +152,8 @@ const Profile = () => {
     </SafeAreaView>
   );
 };
+
+export default Profile;
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -263,12 +243,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-export default Profile;
-
-function launchImageLibrary(
-  options: { mediaType: string; includeBase64: boolean },
-  arg1: (response: any) => void
-) {
-  throw new Error("Function not implemented.");
-}

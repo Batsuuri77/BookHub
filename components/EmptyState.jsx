@@ -20,7 +20,7 @@ const EmptyState = ({ title, subtitle }) => {
 
       <CustomButton
         title="Create a library"
-        handlePress={() => router.push("/addnewbook")}
+        handlePress={() => router.push("/(tabs)/myLibrary/addnewbook")}
         containerStyles="w-full h-[56px] my-5 bg-primary"
       />
     </View>
